@@ -1,5 +1,7 @@
-
-const divTodolist = document.querySelector(".todo-list")
+import { Todo } from "../classes";
+import {todoList} from "../index"
+const divTodolist = document.querySelector(".todo-list");
+const txtInput =   document.querySelector(".new-todo");
 export const crearTodoHTML= (todo) => {
 
     const htmlTodo = `
@@ -17,3 +19,18 @@ div.innerHTML =  htmlTodo;
 divTodolist.append(div.firstElementChild);
 return div.firstElementChild;
 }
+
+// Eventos
+
+txtInput.addEventListener("keyup", (event)=>
+{
+    if (event.keyCode === 13 && txtInput.value.length > 0) {
+        console.log(txtInput.value);
+        const nuevoTodo = new Todo(txtInput.value)
+        todoList.nuevoTodo(nuevoTodo);
+        console.log(todoList);
+        crearTodoHTML(nuevoTodo);
+        txtInput.value=('');  
+    }
+}
+)
