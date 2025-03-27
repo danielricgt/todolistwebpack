@@ -1,20 +1,22 @@
 export class TodoList {
-    constructor() {
-        this.todos = [];
-}
+  constructor() {
+    this.todos = [];
+  }
 
-nuevoTodo(todo){
+  nuevoTodo(todo) {
     this.todos.push(todo);
-}
-deleteTodo(id){
+  }
+  deleteTodo(id) {}
 
-}
+  toggleTodo(id) {
+    for (const todo of this.todos) {
+      console.log(id, todo.id);
+      if (todo.id == id) {
+        todo.completado = !todo.completado;
+        break;
+      }
+    }
+  }
 
-toggleTodo(id){
-
-}
-
-deleteTodo(){
-    
-}
+  deleteTodo() {}
 }
