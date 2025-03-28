@@ -52,5 +52,4 @@ divTodolist.addEventListener("click", (event) => {
     divTodolist.removeChild(todoElemento);
 
   }
-  console.log(todoList);
 });
