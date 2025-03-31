@@ -22,6 +22,8 @@ export const crearTodoHTML = (todo) => {
 
 // Eventos
 
+// Evento para agregar un nuevo todo
+
 txtInput.addEventListener("keyup", (event) => {
   if (event.keyCode === 13 && txtInput.value.length > 0) {
     console.log(txtInput.value);
@@ -32,6 +34,8 @@ txtInput.addEventListener("keyup", (event) => {
     txtInput.value = "";
   }
 });
+
+// Evento para marcar un todo como completado o eliminarlo
 
 divTodolist.addEventListener("click", (event) => {
   const nombreElemento = event.target.localName; //input, label or button
@@ -53,6 +57,8 @@ divTodolist.addEventListener("click", (event) => {
     divTodolist.removeChild(todoElemento);
   }
 });
+
+// Evento para borrar todos los todos completados
 
 btnBorrar.addEventListener("click", () => { 
   todoList.deleteCompleted();
