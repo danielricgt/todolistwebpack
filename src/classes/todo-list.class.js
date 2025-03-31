@@ -1,3 +1,4 @@
+import { Todo } from "./todo.class";  
 export class TodoList {
   constructor() {
     // this.todos = [];
@@ -34,11 +35,10 @@ export class TodoList {
   }
 
   loadLocalStorage() {
-    if (localStorage.getItem("todo")) {
-      this.todos = JSON.parse(localStorage.getItem("todo"));
-      console.log("Todos from local storage:", this.todos);
-    } else {
-      this.todos = [];
-    }
+    this.todos = localStorage.getItem("todo")
+      ? JSON.parse(localStorage.getItem("todo"))
+      : [];
+      this.todos = this.todos.map(Todo.fromJson);
   }
 }
+ 
