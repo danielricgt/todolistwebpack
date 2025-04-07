@@ -3,11 +3,16 @@ import { todoList } from "../index";
 const divTodolist = document.querySelector(".todo-list");
 const txtInput = document.querySelector(".new-todo");
 const btnBorrar = document.querySelector(".clear-completed");
+const ulFiltro = document.querySelector(".filters");
+const anchorFiltros = document.querySelectorAll(".filtro");
+
 export const crearTodoHTML = (todo) => {
   const htmlTodo = `
     <li class="${todo.completado ? "completed" : ""}" data-id="${todo.id}">
       <div class="view">
-        <input class="toggle" type="checkbox" ${todo.completado ? "checked" : ""}>
+        <input class="toggle" type="checkbox" ${
+          todo.completado ? "checked" : ""
+        }>
         <label>${todo.tarea}</label>
         <button class="destroy"></button>
       </div>
@@ -42,17 +47,17 @@ divTodolist.addEventListener("click", (event) => {
   const todoElemento = event.target.parentElement.parentElement;
   const todoId = todoElemento.getAttribute("data-id");
 
-  console.log(nombreElemento);  
+  console.log(nombreElemento);
 
   // Verifica que el elemento está correctamente seleccionado
 
-// Verifica el estado inicial de las clases del elemento
+  // Verifica el estado inicial de las clases del elemento
 
-  if (nombreElemento.includes('input')) {
+  if (nombreElemento.includes("input")) {
     todoList.toggleTodo(todoId);
-    todoElemento.classList.toggle('completed'); }
-  else if (nombreElemento.includes('button')){
-    console.log('entrando a button ');
+    todoElemento.classList.toggle("completed");
+  } else if (nombreElemento.includes("button")) {
+    console.log("entrando a button ");
     todoList.deleteTodo(todoId);
     divTodolist.removeChild(todoElemento);
   }
@@ -60,13 +65,37 @@ divTodolist.addEventListener("click", (event) => {
 
 // Evento para borrar todos los todos completados
 
-btnBorrar.addEventListener("click", () => { 
+btnBorrar.addEventListener("click", () => {
   todoList.deleteCompleted();
   for (let i = divTodolist.children.length - 1; i >= 0; i--) {
     const elemento = divTodolist.children[i];
-    console.log(elemento)
+    console.log(elemento);
     if (elemento.classList.contains("completed")) {
       divTodolist.removeChild(elemento);
     }
   }
 });
+
+ulFiltro.addEventListener("click", (event) => {
+  console.log(event.target.text);
+  const filtro = event.target.text;
+  if(!filtro) return;
+  anchorFiltros.forEach(elem => elem.classList.remove("selected"));
+  event.target.classList.add("selected");
+  for(const elemento of divTodolist.children ){
+    elemento.classList.remove("hidden");
+    const completado = elemento.classList.contains("completed");
+    switch (filtro) {
+      case "Pendientes":
+        if (completado){
+          elemento.classList.add("hidden");
+        }
+        break;
+      case "Completados":
+        if (!completado){
+          elemento.classList.add("hidden");
+        }
+        break; 
+    }
+  }
+})
