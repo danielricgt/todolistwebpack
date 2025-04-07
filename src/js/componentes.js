@@ -2,6 +2,7 @@ import { Todo } from "../classes";
 import { todoList } from "../index";
 const divTodolist = document.querySelector(".todo-list");
 const txtInput = document.querySelector(".new-todo");
+const btnBorrar = document.querySelector(".clear-completed");
 export const crearTodoHTML = (todo) => {
   const htmlTodo = `
     <li class="${todo.completado ? "completed" : ""}" data-id="${todo.id}">
@@ -21,6 +22,8 @@ export const crearTodoHTML = (todo) => {
 
 // Eventos
 
+// Evento para agregar un nuevo todo
+
 txtInput.addEventListener("keyup", (event) => {
   if (event.keyCode === 13 && txtInput.value.length > 0) {
     console.log(txtInput.value);
@@ -31,6 +34,8 @@ txtInput.addEventListener("keyup", (event) => {
     txtInput.value = "";
   }
 });
+
+// Evento para marcar un todo como completado o eliminarlo
 
 divTodolist.addEventListener("click", (event) => {
   const nombreElemento = event.target.localName; //input, label or button
@@ -50,6 +55,18 @@ divTodolist.addEventListener("click", (event) => {
     console.log('entrando a button ');
     todoList.deleteTodo(todoId);
     divTodolist.removeChild(todoElemento);
+  }
+});
 
+// Evento para borrar todos los todos completados
+
+btnBorrar.addEventListener("click", () => { 
+  todoList.deleteCompleted();
+  for (let i = divTodolist.children.length - 1; i >= 0; i--) {
+    const elemento = divTodolist.children[i];
+    console.log(elemento)
+    if (elemento.classList.contains("completed")) {
+      divTodolist.removeChild(elemento);
+    }
   }
 });
